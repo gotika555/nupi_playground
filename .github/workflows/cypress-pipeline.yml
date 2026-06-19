@@ -1,0 +1,22 @@
+name: End-to-End Test Suite
+
+# Trigger the runner on direct pushes to main OR when a PR is opened against main
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies & Run Cypress Tests
+        uses: cypress-io/github-action@v6
+        with:
+          build: npm run build --if-present
