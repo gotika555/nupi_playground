@@ -1,6 +1,5 @@
 name: End-to-End Test Suite
 
-# FIX 1: Allow it to trigger on pushes to main AND any Pull Requests targeting main
 on:
   push:
     branches:
