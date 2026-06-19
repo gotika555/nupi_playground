@@ -1,7 +1,8 @@
+****Test locally****
+
 Open Cypress
 
 ```npx cypress open```
-
 
 Run headless
 
