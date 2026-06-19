@@ -1,0 +1,27 @@
+name: End-to-End Test Suite
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v6
+        with:
+          build: npm run build --if-present
+          # TARGET SPEC: Run only the login spec file
+          spec: cypress/e2e/first_test.cy.js
+
+      - name: Broadcast Pipeline Telemetry to Dashboard
+        if: always()
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+          -d '{"status": "${{ job.status }}", "repository": { "full_name": "${{ github.repository }}" }, "workflow": "${{ github.workflow }}"}' \
+          https://smee.io/m73sIWCXk90gCtcz/webhook
