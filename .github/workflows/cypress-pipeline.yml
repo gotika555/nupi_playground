@@ -31,14 +31,6 @@ jobs:
             ERROR_DETAILS="All spec assertions passed smoothly."
           fi
 
-          # Using jq format or plain clean string mapping to guarantee it doesn't drop
           curl -X POST -H "Content-Type: application/json" \
-          --data-binary @- <<EOF
-          {
-            "status": "${{ job.status }}",
-            "repository": { "full_name": "${{ github.repository }}" },
-            "workflow": "${{ github.workflow }}",
-            "errorMessage": "$ERROR_DETAILS"
-          }
-  EOF
-          
+          -d "{\"status\": \"${{ job.status }}\", \"repository\": { \"full_name\": \"${{ github.repository }}\" }, \"workflow\": \"${{ github.workflow }}\", \"errorMessage\": \"$ERROR_DETAILS\"}" \
+          https://smee.io/m73sIWCXk90gCtcz
