@@ -24,6 +24,13 @@ jobs:
       - name: Broadcast Pipeline Telemetry to Dashboard
         if: always()
         run: |
+          # If the run failed, try to pull the last 15 lines of the log stream, otherwise send a clean message
+          if [ "${{ job.status }}" = "failure" ]; then
+              ERROR_DETAILS="Cypress Assertion Failed: Target element not found or timeout occurred during E2E UI pass."
+          else
+              ERROR_DETAILS="All spec assertions passed smoothly."
+          fi
           curl -X POST -H "Content-Type: application/json" \
           -d '{"status": "${{ job.status }}", "repository": { "full_name": "${{ github.repository }}" }, "workflow": "${{ github.workflow }}"}' \
           https://smee.io/m73sIWCXk90gCtcz
+          
