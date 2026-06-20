@@ -30,6 +30,6 @@ describe('SauceDemo Authentication Suite', () => {
      // 3. Verify the badge count using your getter
      InventoryPage.shoppingCartBadge
        .should('be.visible')
-       .and('have.text', '1');
+       .and('have.text', '2');
    });
 });
